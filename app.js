@@ -16,6 +16,7 @@ const articleSchema = {
 
 const Article = mongoose.model("article", articleSchema);
 
+/////////////////////////////Requesting ALL Articles///////////////////////////////
 app.route("/articles")
 
     .get((req, res) => {
@@ -40,6 +41,20 @@ app.route("/articles")
         };
         deleteArticle();
     });
+
+/////////////////////////////Requesting A Specific Article/////////////////////////////// 
+
+app.route("/articles/:articleTitle")
+
+    .get((req, res) => {
+        async function findOne() {
+            const foundItem = await Article.findOne({ title: req.params.articleTitle });
+            res.send(foundItem);
+        }
+        findOne();
+    });
+
+
 
 app.listen("3000", () => {
     console.log("Server started on port 3000");
