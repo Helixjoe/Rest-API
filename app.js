@@ -47,14 +47,22 @@ app.route("/articles")
 app.route("/articles/:articleTitle")
 
     .get((req, res) => {
-        async function findOne() {
+        async function findArticle() {
             const foundItem = await Article.findOne({ title: req.params.articleTitle });
             res.send(foundItem);
         }
-        findOne();
+        findArticle();
+    })
+
+    .put((req, res) => {
+        async function updateArticle() {
+            await Article.updateOne({ title: req.params.articleTitle }, {
+                title: req.body.title,
+                content: req.body.content
+            })
+        }
+        updateArticle();
     });
-
-
 
 app.listen("3000", () => {
     console.log("Server started on port 3000");
