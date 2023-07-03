@@ -36,10 +36,10 @@ app.route("/articles")
     })
 
     .delete((req, res) => {
-        async function deleteArticle() {
+        async function deleteAllArticles() {
             await Article.deleteMany();
         };
-        deleteArticle();
+        deleteAllArticles();
     });
 
 /////////////////////////////Requesting A Specific Article/////////////////////////////// 
@@ -62,7 +62,23 @@ app.route("/articles/:articleTitle")
             })
         }
         updateArticle();
+    })
+    .patch((req, res) => {
+        async function updateArticle() {
+            await Article.updateMany({ title: req.params.articleTitle }, {
+                $set: req.body
+            }
+            )
+        }
+        updateArticle();
+    })
+    .delete((req, res) => {
+        async function deleteArticle() {
+            await Article.deleteOne({ title: req.params.articleTitle })
+        };
+        deleteArticle();
     });
+
 
 app.listen("3000", () => {
     console.log("Server started on port 3000");
