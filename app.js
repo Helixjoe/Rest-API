@@ -56,7 +56,7 @@ app.route("/articles/:articleTitle")
 
     .put((req, res) => {
         async function updateArticle() {
-            await Article.updateOne({ title: req.params.articleTitle }, {
+            await Article.replaceOne({ title: req.params.articleTitle }, {
                 title: req.body.title,
                 content: req.body.content
             })
